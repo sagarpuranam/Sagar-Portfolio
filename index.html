@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sagar Puranam — Data Science &amp; Frontend Engineer</title>
+<meta name="description" content="Portfolio of Puranam Sagar — Data Science undergraduate building AI, computer vision and front-end web applications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  :root{
+    --bg:#0B1220;
+    --bg-soft:#0F1830;
+    --panel:#131C33;
+    --line:#243156;
+    --ink:#EDEFF5;
+    --ink-dim:#9AA3BD;
+    --ink-mute:#6B7494;
+    --indigo:#5B7CFA;
+    --indigo-soft:#8FA5FF;
+    --amber:#F5A94F;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Manrope', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --ease: cubic-bezier(.16,.8,.24,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.6;
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(circle at 85% 8%, rgba(91,124,250,0.14), transparent 45%),
+      radial-gradient(circle at 8% 70%, rgba(245,169,79,0.08), transparent 40%);
+    background-attachment:fixed;
+  }
+  ::selection{background:var(--indigo);color:#fff;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--indigo-soft); outline-offset:3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  @media (max-width:640px){.wrap{padding:0 20px;}}
+
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(11,18,32,0.78); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{max-width:1180px; margin:0 auto; padding:18px 32px; display:flex; align-items:center; justify-content:space-between;}
+  .logo{font-family:var(--mono); font-size:14px; letter-spacing:0.06em; display:flex; align-items:center; gap:8px;}
+  .logo .dot{width:6px;height:6px;background:var(--amber);border-radius:50%;display:inline-block;animation:blink 2.4s infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:.15;}}
+  .nav-links{display:flex; gap:36px; font-family:var(--mono); font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;}
+  .nav-links a{position:relative; color:var(--ink-dim); transition:color .3s var(--ease);}
+  .nav-links a:hover{color:var(--indigo-soft);}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--indigo-soft);transition:width .3s var(--ease);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{border:1px solid var(--indigo); padding:8px 16px; font-family:var(--mono); font-size:12px; letter-spacing:.05em; color:var(--indigo-soft);}
+  .nav-cta:hover{background:var(--indigo); color:#fff;}
+  .menu-btn{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px;}
+  .menu-btn span{width:22px;height:1.5px;background:var(--ink);}
+  @media (max-width:800px){
+    .nav-links, .nav-cta{display:none;}
+    .menu-btn{display:flex;}
+  }
+  #mobile-menu{position:fixed; inset:0; background:var(--bg); z-index:99; display:none; flex-direction:column; align-items:center; justify-content:center; gap:28px;}
+  #mobile-menu.open{display:flex;}
+  #mobile-menu a{font-family:var(--display); font-size:28px;}
+  #mobile-menu .nav-cta{display:inline-block; margin-top:10px;}
+
+  .hero{
+    min-height:100vh; display:flex; align-items:center; position:relative;
+    padding:140px 0 80px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{display:grid; grid-template-columns:1.2fr 0.8fr; gap:60px; align-items:center; width:100%;}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr; gap:48px;} .hero{padding-top:120px;}}
+
+  .avail-pill{
+    display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11.5px;
+    letter-spacing:.05em; color:var(--ink-dim); border:1px solid var(--line); border-radius:999px;
+    padding:7px 14px 7px 10px; margin-bottom:22px;
+  }
+  .avail-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 8px rgba(74,222,128,.7);}
+  .eyebrow{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--amber); display:flex; align-items:center; gap:10px; margin-bottom:26px;
+  }
+  .eyebrow::before{content:'';width:26px;height:1px;background:var(--amber);}
+
+  h1.name{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    line-height:1.02; letter-spacing:-0.01em;
+    margin-bottom:22px;
+  }
+  h1.name .line{display:block; overflow:hidden;}
+  h1.name .line span{display:inline-block; transform:translateY(110%); animation:riseUp .9s var(--ease) forwards;}
+  h1.name .line:nth-child(1) span{animation-delay:.05s;}
+  h1.name .line:nth-child(2) span{animation-delay:.18s; background:linear-gradient(100deg, var(--indigo-soft), var(--amber)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  @keyframes riseUp{to{transform:translateY(0);}}
+
+  .hero-desc{max-width:520px; color:var(--ink-dim); font-size:16.5px; margin-bottom:34px;}
+  .hero-desc strong{color:var(--ink); font-weight:600;}
+
+  .hero-actions{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:46px;}
+  .btn{
+    font-family:var(--mono); font-size:13px; letter-spacing:.04em;
+    padding:14px 26px; border:1px solid var(--indigo); display:inline-flex; align-items:center; gap:8px;
+    transition:all .3s var(--ease);
+  }
+  .btn.primary{background:var(--indigo); color:#fff; border-color:var(--indigo);}
+  .btn.primary:hover{background:transparent; color:var(--indigo-soft);}
+  .btn.ghost{color:var(--ink); border-color:var(--line);}
+  .btn.ghost:hover{border-color:var(--amber); color:var(--amber);}
+
+  .hero-stats{display:flex; gap:40px; font-family:var(--mono);}
+  .hero-stats div b{display:block; font-size:1.6rem; font-family:var(--display); font-weight:600; color:var(--indigo-soft);}
+  .hero-stats div span{font-size:11px; color:var(--ink-mute); letter-spacing:.06em; text-transform:uppercase;}
+
+  .portrait-wrap{position:relative; justify-self:center;}
+  .portrait{position:relative; width:min(360px, 80vw); aspect-ratio:4/5; overflow:hidden; border-radius:4px;}
+  .portrait img{width:100%; height:100%; object-fit:cover; object-position:top center;}
+  .scan-frame{position:absolute; inset:0; pointer-events:none;}
+  .scan-frame .corner{position:absolute; width:22px; height:22px; border:1.5px solid var(--amber);}
+  .scan-frame .corner.tl{top:-1px; left:-1px; border-right:none; border-bottom:none;}
+  .scan-frame .corner.tr{top:-1px; right:-1px; border-left:none; border-bottom:none;}
+  .scan-frame .corner.bl{bottom:-1px; left:-1px; border-right:none; border-top:none;}
+  .scan-frame .corner.br{bottom:-1px; right:-1px; border-left:none; border-top:none;}
+  .scan-line{position:absolute; left:0; right:0; height:1.5px; background:linear-gradient(90deg, transparent, var(--indigo-soft) 50%, transparent); animation:scan 3.6s linear infinite; box-shadow:0 0 10px rgba(143,165,255,.6);}
+  @keyframes scan{0%{top:2%;}50%{top:96%;}100%{top:2%;}}
+  .tag-label{
+    position:absolute; bottom:-14px; left:-14px; background:var(--panel); border:1px solid var(--line);
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.05em; padding:7px 12px; color:var(--ink-dim);
+  }
+  .tag-label b{color:var(--amber); font-weight:500;}
+
+  section{padding:110px 0; border-bottom:1px solid var(--line);}
+  .sec-head{display:flex; justify-content:space-between; align-items:flex-end; gap:30px; margin-bottom:60px; flex-wrap:wrap;}
+  .sec-num{font-family:var(--mono); font-size:12px; color:var(--indigo-soft); letter-spacing:.1em;}
+  h2.sec-title{font-family:var(--display); font-weight:600; font-size:clamp(1.9rem,3.4vw,2.6rem); letter-spacing:-0.01em; margin-top:8px;}
+  .sec-note{max-width:340px; color:var(--ink-dim); font-size:14.5px; text-align:right;}
+  @media (max-width:700px){.sec-note{text-align:left;}}
+
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:70px;}
+  @media (max-width:860px){.about-grid{grid-template-columns:1fr; gap:40px;}}
+  .about-photo{width:112px; height:112px; border-radius:50%; overflow:hidden; border:1px solid var(--line); margin-bottom:26px; box-shadow:0 0 0 5px var(--bg-soft);}
+  .about-photo img{width:100%; height:100%; object-fit:cover; object-position:top center;}
+  .about-text p{color:var(--ink-dim); font-size:16px; margin-bottom:20px; max-width:520px;}
+  .about-text p strong{color:var(--ink); font-weight:600;}
+  .edu-list{margin-top:34px; border-top:1px solid var(--line);}
+  .edu-item{display:flex; justify-content:space-between; gap:20px; padding:20px 0; border-bottom:1px solid var(--line);}
+  .edu-item .school{font-weight:600; font-family:var(--display); font-size:16px;}
+  .edu-item .meta{color:var(--ink-mute); font-family:var(--mono); font-size:12px; margin-top:4px;}
+  .edu-item .cgpa{font-family:var(--mono); font-size:13px; color:var(--amber); white-space:nowrap; text-align:right;}
+
+  .skills-col .skill-group{margin-bottom:30px;}
+  .skill-group h3{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-mute); margin-bottom:14px;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:9px;}
+  .chip{font-family:var(--mono); font-size:12.5px; padding:8px 14px; border:1px solid var(--line); color:var(--ink-dim); transition:all .25s var(--ease); background:var(--panel);}
+  .chip:hover{border-color:var(--indigo); color:var(--indigo-soft);}
+
+  .timeline{border-top:1px solid var(--line);}
+  .t-item{display:grid; grid-template-columns:140px 1fr; gap:26px; padding:26px 0; border-bottom:1px solid var(--line);}
+  @media (max-width:600px){.t-item{grid-template-columns:1fr; gap:8px;}}
+  .t-item .when{font-family:var(--mono); font-size:12px; color:var(--amber);}
+  .t-item h4{font-family:var(--display); font-size:1.1rem; font-weight:600; margin-bottom:6px;}
+  .t-item p{color:var(--ink-dim); font-size:14.5px;}
+
+  /* ---------- PASSION ---------- */
+  .passion-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:60px; align-items:center;}
+  @media (max-width:860px){.passion-grid{grid-template-columns:1fr; gap:40px;}}
+  .passion-photo{position:relative; width:100%; max-width:380px; aspect-ratio:4/5.4; overflow:hidden; border:1px solid var(--line); margin:0 auto;}
+  .passion-photo img{width:100%; height:100%; object-fit:cover; object-position:top center;}
+  .passion-photo::after{content:'';position:absolute; inset:0; box-shadow:inset 0 -60px 60px -30px rgba(11,18,32,0.6);}
+  .passion-text p{color:var(--ink-dim); font-size:16.5px; margin-bottom:20px; max-width:520px;}
+  .passion-text p strong{color:var(--ink); font-weight:600;}
+  .passion-text .quote{
+    font-family:var(--display); font-size:1.4rem; font-weight:500; line-height:1.35; color:var(--ink);
+    border-left:2px solid var(--amber); padding-left:20px; margin:28px 0; max-width:480px;
+  }
+
+  #contact{padding-bottom:60px;}
+  .contact-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:70px;}
+  @media (max-width:860px){.contact-grid{grid-template-columns:1fr; gap:46px;}}
+  .contact-info h2.sec-title{margin-bottom:20px;}
+  .contact-info p{color:var(--ink-dim); max-width:420px; margin-bottom:34px;}
+  .contact-link-row{display:flex; align-items:center; gap:14px; padding:16px 0; border-top:1px solid var(--line);}
+  .contact-link-row:last-of-type{border-bottom:1px solid var(--line);}
+  .contact-link-row span.k{font-family:var(--mono); font-size:11.5px; color:var(--ink-mute); width:80px; text-transform:uppercase; letter-spacing:.06em;}
+  .contact-link-row a{font-size:15px; transition:color .25s;}
+  .contact-link-row a:hover{color:var(--indigo-soft);}
+
+  form#contactForm{display:flex; flex-direction:column; gap:22px;}
+  .field{position:relative; border-bottom:1px solid var(--line); padding-bottom:10px;}
+  .field label{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-mute); display:block; margin-bottom:10px;}
+  .field input, .field textarea{width:100%; background:transparent; border:none; color:var(--ink); font-family:var(--body); font-size:16px; resize:none;}
+  .field input:focus, .field textarea:focus{outline:none;}
+  .field::after{content:'';position:absolute; left:0; bottom:-1px; width:0; height:1px; background:var(--indigo-soft); transition:width .35s var(--ease);}
+  .field.focused::after{width:100%;}
+  .submit-row{display:flex; align-items:center; gap:18px; margin-top:6px;}
+  .submit-row button{
+    font-family:var(--mono); font-size:13px; letter-spacing:.05em; padding:15px 30px; background:var(--indigo); color:#fff;
+    border:1px solid var(--indigo); cursor:pointer; transition:all .3s var(--ease);
+  }
+  .submit-row button:hover{background:transparent; color:var(--indigo-soft);}
+  .form-note{font-family:var(--mono); font-size:11.5px; color:var(--ink-mute);}
+  .form-status{font-family:var(--mono); font-size:12px; color:var(--amber);}
+
+  footer{padding:34px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
+  footer .fnote{font-family:var(--mono); font-size:11.5px; color:var(--ink-mute);}
+  footer .fsocial{display:flex; gap:22px; font-family:var(--mono); font-size:12px;}
+  footer .fsocial a{color:var(--ink-dim); transition:color .25s;}
+  footer .fsocial a:hover{color:var(--indigo-soft);}
+
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .8s var(--ease), transform .8s var(--ease);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo"><span class="dot"></span>SAGAR / DS.DEV</a>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#passion">Passion</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="nav-cta">Let's Talk</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div id="mobile-menu">
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#experience">Experience</a>
+  <a href="#passion">Passion</a>
+  <a href="#contact">Contact</a>
+  <a href="#contact" class="btn primary nav-cta">Let's Talk</a>
+</div>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="avail-pill">Available for Internships — 2026</div>
+        <div class="eyebrow">Data Science &amp; Frontend Engineer — Hyderabad, India</div>
+        <h1 class="name">
+          <span class="line"><span>Sagar Puranam .</span></span>
+          <span class="line"><span>I build things that see &amp; respond.</span></span>
+        </h1>
+        <p class="hero-desc">
+          Final-year <strong>Data Science</strong> undergraduate who ships real, working software —
+          from a <strong>computer-vision sign-language translator</strong> to responsive
+          <strong>front-end dashboards</strong>. I care about interfaces that feel considered and
+          systems that actually work.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn primary">View Work →</a>
+          <a href="#contact" class="btn ghost">Hire Me</a>
+        </div>
+        <div class="hero-stats">
+          <div><b>2027</b><span>Graduating</span></div>
+          <div><b>4+</b><span>Shipped Projects</span></div>
+          <div><b>7.62</b><span>CGPA / 10</span></div>
+        </div>
+      </div>
+
+      <div class="portrait-wrap">
+        <div class="portrait">
+          <img src="images/hero_bw.jpg" alt="Portrait of Puranam Sagar">
+          <div class="scan-frame">
+            <div class="corner tl"></div><div class="corner tr"></div>
+            <div class="corner bl"></div><div class="corner br"></div>
+            <div class="scan-line"></div>
+          </div>
+        </div>
+        <div class="tag-label">SUBJECT: <b>SAGAR.P</b> — CONF 99.2%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num">01 / About</div>
+        <h2 class="sec-title">Background</h2>
+      </div>
+      <p class="sec-note">Grounded in electronics, trained in data — now building software that connects the two.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="about-photo">
+          <img src="images/headshot.jpg" alt="Puranam Sagar">
+        </div>
+        <p>
+          I'm a Data Science undergraduate at <strong>Malla Reddy Engineering College, Hyderabad</strong>,
+          graduating in 2027. Before that, I completed a Diploma in <strong>Electronics &amp; Communication
+          Engineering</strong> — a background that still shapes how I think about systems: as signals in,
+          decisions out.
+        </p>
+        <p>
+          My work sits at the intersection of <strong>AI/ML, computer vision and front-end development</strong>.
+          I've built a real-time ASL translator using OpenCV and TensorFlow, an NLP chatbot with Flask,
+          and responsive dashboards focused on clean, usable interfaces. I completed a Junior Developer
+          Internship at <strong>AimR Edu LLP</strong> and Data Structures training at <strong>TechAugusta
+          Pvt. Ltd.</strong>
+        </p>
+        <div class="edu-list">
+          <div class="edu-item">
+            <div>
+              <div class="school">Malla Reddy Engineering College, Hyderabad</div>
+              <div class="meta">B.Tech · Data Science · 2024–2027</div>
+            </div>
+            <div class="cgpa">CGPA<br>7.62/10</div>
+          </div>
+          <div class="edu-item">
+            <div>
+              <div class="school">Government Polytechnic, Warangal</div>
+              <div class="meta">Diploma · Electronics &amp; Communication Engineering · 2021–2024</div>
+            </div>
+            <div class="cgpa">CGPA<br>8.1/10</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-col reveal">
+        <div class="skill-group">
+          <h3>Languages &amp; Core</h3>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">Java</span><span class="chip">SQL</span>
+            <span class="chip">Data Structures</span><span class="chip">OOP</span><span class="chip">DBMS</span>
+            <span class="chip">Machine Learning</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Frontend &amp; UI/UX</h3>
+          <div class="chip-row">
+            <span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">JavaScript</span>
+            <span class="chip">Responsive Design</span><span class="chip">Figma</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>AI / Computer Vision</h3>
+          <div class="chip-row">
+            <span class="chip">TensorFlow</span><span class="chip">OpenCV</span><span class="chip">NLTK</span>
+            <span class="chip">Flask</span><span class="chip">Django</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Tools &amp; Data</h3>
+          <div class="chip-row">
+            <span class="chip">MySQL</span><span class="chip">GitHub</span><span class="chip">VS Code</span>
+            <span class="chip">REST APIs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS FOCUS (auto-switch) -->
+  <section id="skills" class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num">02 / Focus</div>
+        <h2 class="sec-title">How I work</h2>
+      </div>
+      <p class="sec-note">Toggle to see how I approach each side of the stack.</p>
+    </div>
+
+    <div class="focus-switch reveal" style="border-top:1px solid var(--line);">
+      <div style="display:flex; gap:0; border-bottom:1px solid var(--line);" role="tablist">
+        <button class="focus-tab active" data-focus="uiux" role="tab" style="flex:1; font-family:var(--mono); font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; padding:18px; background:transparent; border:none; color:var(--ink); cursor:pointer; border-bottom:2px solid var(--indigo); transition:all .3s;">UI / UX</button>
+        <button class="focus-tab" data-focus="frontend" role="tab" style="flex:1; font-family:var(--mono); font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; padding:18px; background:transparent; border:none; color:var(--ink-dim); cursor:pointer; border-bottom:2px solid transparent; transition:all .3s;">Front-End</button>
+        <button class="focus-tab" data-focus="ai" role="tab" style="flex:1; font-family:var(--mono); font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; padding:18px; background:transparent; border:none; color:var(--ink-dim); cursor:pointer; border-bottom:2px solid transparent; transition:all .3s;">AI / ML</button>
+      </div>
+      <div style="padding:44px 0;">
+        <p id="focus-text" style="max-width:640px; font-size:17px; color:var(--ink-dim); min-height:80px;">
+          I start every screen with the person using it: what they're trying to do, and the fastest, clearest
+          path there. In Figma I sketch flows before pixels — hierarchy, spacing and contrast come first,
+          decoration comes last.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num">03 / Experience</div>
+        <h2 class="sec-title">Experience &amp; Certifications</h2>
+      </div>
+    </div>
+    <div class="timeline reveal">
+      <div class="t-item">
+        <div class="when">2024</div>
+        <div>
+          <h4>Junior Developer Internship — AimR Edu LLP</h4>
+          <p>Hands-on experience contributing to real development tasks in a professional team environment.</p>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="when">2024</div>
+        <div>
+          <h4>Data Structures Training — TechAugusta Pvt. Ltd.</h4>
+          <p>Focused training in data structures and problem-solving fundamentals.</p>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="when">2024</div>
+        <div>
+          <h4>VISHESH-2024 — Inter-College Project Expo</h4>
+          <p>Presented project work at an inter-college technical showcase.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PASSION -->
+  <section id="passion" class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num">04 / Passion</div>
+        <h2 class="sec-title">Why I build</h2>
+      </div>
+      <p class="sec-note">The part of the resume that doesn't fit in a bullet point.</p>
+    </div>
+
+    <div class="passion-grid">
+      <div class="passion-photo reveal">
+        <img src="images/passion.jpg" alt="Puranam Sagar">
+      </div>
+      <div class="passion-text reveal">
+        <p>
+          What pulls me into a project isn't the tech stack — it's the moment something that used to be
+          impossible for someone quietly starts working. That's what kept me up late on the
+          <strong>ASL translator</strong>: watching a hand gesture turn into words on screen, in real time,
+          for someone who needed it to.
+        </p>
+        <p class="quote">"I don't just want to write code that runs — I want to build things that change what someone else can do."</p>
+        <p>
+          That's the thread running through everything I make, from a <strong>chatbot that actually
+          understands intent</strong> to a <strong>dashboard that makes a hospital's day easier</strong>.
+          Data science gave me the discipline to ask what the numbers mean. Front-end gave me the craft
+          to make that meaning usable. I'm still early in my career — but that combination is exactly
+          where I want to keep building.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-num">05 / Contact</div>
+        <h2 class="sec-title">Let's build something</h2>
+      </div>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <p>
+          Have a project, an internship, or a role in mind? Send a message below or reach out directly —
+          it'll land straight in my inbox.
+        </p>
+        <div class="contact-link-row"><span class="k">Email</span><a href="mailto:sagarpuranam058@gmail.com">sagarpuranam058@gmail.com</a></div>
+        <div class="contact-link-row"><span class="k">Phone</span><a href="tel:+919347128398">+91 93471 28398</a></div>
+        <div class="contact-link-row"><span class="k">GitHub</span><a href="https://github.com/sagarpuranam" target="_blank" rel="noopener">github.com/sagarpuranam</a></div>
+        <div class="contact-link-row"><span class="k">LinkedIn</span><a href="https://linkedin.com/in/sagarpuranam12" target="_blank" rel="noopener">linkedin.com/in/sagarpuranam12</a></div>
+      </div>
+
+      <form id="contactForm" class="reveal">
+        <div class="field">
+          <label for="fname">Your Name</label>
+          <input type="text" id="fname" name="fname" required>
+        </div>
+        <div class="field">
+          <label for="femail">Your Email</label>
+          <input type="email" id="femail" name="femail" required>
+        </div>
+        <div class="field">
+          <label for="fmsg">Message</label>
+          <textarea id="fmsg" name="fmsg" rows="4" required></textarea>
+        </div>
+        <div class="submit-row">
+          <button type="submit">Send Message →</button>
+          <span class="form-status" id="formStatus"></span>
+        </div>
+        <span class="form-note">Sends straight to sagarpuranam058@gmail.com. (Falls back to your email app if not yet configured — see setup note in the code.)</span>
+      </form>
+    </div>
+  </section>
+
+  <footer class="wrap">
+    <span class="fnote">© 2026 Puranam Sagar — Data, vision, and interfaces.</span>
+    <div class="fsocial">
+      <a href="https://github.com/sagarpuranam" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/sagarpuranam12" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:sagarpuranam058@gmail.com">Email</a>
+    </div>
+  </footer>
+</main>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.15});
+  revealEls.forEach(el => io.observe(el));
+
+  const focusContent = {
+    uiux: "I start every screen with the person using it: what they're trying to do, and the fastest, clearest path there. In Figma I sketch flows before pixels — hierarchy, spacing and contrast come first, decoration comes last.",
+    frontend: "I turn those flows into responsive, accessible interfaces with clean HTML, CSS and JavaScript — no unnecessary frameworks when vanilla code does the job well, like in my Weather Dashboard and Hospital Management builds.",
+    ai: "Underneath the interface, I build the systems that make it smart — training and wiring up computer-vision and NLP models with TensorFlow, OpenCV and NLTK so the product actually understands its input."
+  };
+  const tabs = document.querySelectorAll('.focus-tab');
+  const focusText = document.getElementById('focus-text');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('active'); t.style.color = 'var(--ink-dim)'; t.style.borderBottomColor='transparent'; });
+      tab.classList.add('active'); tab.style.color = 'var(--ink)'; tab.style.borderBottomColor = 'var(--indigo)';
+      focusText.style.opacity = 0;
+      setTimeout(() => { focusText.textContent = focusContent[tab.dataset.focus]; focusText.style.opacity = 1; }, 200);
+    });
+  });
+  focusText.style.transition = 'opacity .25s ease';
+
+  document.querySelectorAll('.field input, .field textarea').forEach(inp => {
+    inp.addEventListener('focus', () => inp.closest('.field').classList.add('focused'));
+    inp.addEventListener('blur', () => { if(!inp.value) inp.closest('.field').classList.remove('focused'); });
+  });
+
+  // ---------------------------------------------------------------
+  // CONTACT FORM — sends via EmailJS (emailjs.com, free tier), with
+  // an automatic mailto: fallback if it isn't configured yet.
+  //
+  // TO ENABLE REAL EMAIL DELIVERY (5 min, free):
+  //   1. Create a free account at https://www.emailjs.com
+  //   2. Add an Email Service (e.g. connect your Gmail) -> copy the SERVICE ID
+  //   3. Create an Email Template with {{from_name}}, {{from_email}},
+  //      {{message}} variables -> copy the TEMPLATE ID
+  //   4. Copy your PUBLIC KEY from Account > General
+  //   5. Paste all three into the EMAILJS config object below.
+  // Until you do this, the form will just open the visitor's email app
+  // instead — so it always works either way.
+  // ---------------------------------------------------------------
+  const EMAILJS = {
+    publicKey: "YOUR_PUBLIC_KEY",
+    serviceId: "YOUR_SERVICE_ID",
+    templateId: "YOUR_TEMPLATE_ID"
+  };
+  const emailjsConfigured = ![EMAILJS.publicKey, EMAILJS.serviceId, EMAILJS.templateId].some(v => v.startsWith("YOUR_"));
+  if (emailjsConfigured && window.emailjs) { emailjs.init(EMAILJS.publicKey); }
+
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const msg = document.getElementById('fmsg').value.trim();
+    if(!name || !email || !msg){ status.textContent = 'Please fill in every field.'; return; }
+
+    if (emailjsConfigured && window.emailjs) {
+      status.textContent = 'Sending…';
+      emailjs.send(EMAILJS.serviceId, EMAILJS.templateId, {
+        from_name: name, from_email: email, message: msg
+      }).then(() => {
+        status.textContent = 'Message sent — thank you!';
+        form.reset();
+      }).catch(() => {
+        status.textContent = 'Send failed — opening your email app instead…';
+        mailtoFallback(name, email, msg);
+      });
+    } else {
+      mailtoFallback(name, email, msg);
+    }
+  });
+
+  function mailtoFallback(name, email, msg){
+    const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
+    const body = encodeURIComponent(`${msg}\n\n— ${name} (${email})`);
+    window.location.href = `mailto:sagarpuranam058@gmail.com?subject=${subject}&body=${body}`;
+    status.textContent = 'Opening your email app…';
+  }
+</script>
+</body>
+</html>
